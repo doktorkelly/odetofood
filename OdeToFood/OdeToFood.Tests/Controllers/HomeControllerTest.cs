@@ -12,6 +12,7 @@ namespace OdeToFood.Tests.Controllers
     [TestClass]
     public class HomeControllerTest
     {
+        [Ignore]
         [TestMethod]
         public void Index()
         {
