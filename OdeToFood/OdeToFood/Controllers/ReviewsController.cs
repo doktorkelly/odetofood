@@ -14,8 +14,9 @@ namespace OdeToFood.Controllers
 
         public ActionResult Index()
         {
+            //TODO: replace by db reviews!
             List<RestaurantReview> model = _reviews
-                .OrderBy(x => x.Country)
+                .OrderBy(x => x.Rating)
                 .ToList();
 
             return View(model);
@@ -109,23 +110,14 @@ namespace OdeToFood.Controllers
         static List<RestaurantReview> _reviews = new List<RestaurantReview>() {
             new RestaurantReview {
                 Id = 1,
-                Name = "cinnamon club",
-                City = "london",
-                Country = "uk",
                 Rating = 10
             },
             new RestaurantReview {
                 Id = 2,
-                Name = "marrakesh",
-                City = "<script>alert('css')</script>",
-                Country = "usa",
                 Rating = 10
             },
             new RestaurantReview {
                 Id = 3,
-                Name = "the house of elliot",
-                City = "ghent",
-                Country = "belgium",
                 Rating = 10
             }
         };
