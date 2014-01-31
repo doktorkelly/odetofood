@@ -6,6 +6,7 @@
         <title>@ViewBag.Title - Meine ASP.NET MVC-Anwendung</title>
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <meta name="viewport" content="width=device-width" />
+        @*@Styles.Render("~/Content/themes/base/css")*@
         @Styles.Render("~/Content/css")
         @Scripts.Render("~/bundles/modernizr")
     </head>
@@ -44,7 +45,8 @@
             </div>
         </footer>
 
-        @Scripts.Render("~/bundles/jquery")
+        @*@Scripts.Render("~/bundles/jquery")*@
+        @Scripts.Render("~/bundles/otf")
         @RenderSection("scripts", required: false)
     </body>
 </html>

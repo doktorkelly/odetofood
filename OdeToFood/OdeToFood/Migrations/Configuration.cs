@@ -27,6 +27,13 @@ using System.Linq;
                         new RestaurantReview { Rating = 9, Body = "great food", ReviewerName = "David" }
                     }
                 });
+
+            for (int i = 0; i < 200; i++)
+            {
+                context.Restaurants.AddOrUpdate(r => r.Name,
+                    new Restaurant { Name = i.ToString(), City = "nowhere", Country = "usa" });
+            }
+
             //not working:
             //context.Reviews.AddOrUpdate(v => v.Id,
             //    new RestaurantReview { Id = 1, Rating = 8, Body = "great food", ReviewerName = "David" });
