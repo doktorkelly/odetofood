@@ -14,7 +14,6 @@ using OdeToFood.Models;
 namespace OdeToFood.Controllers
 {
     [Authorize]
-    [InitializeSimpleMembership]
     public class AccountController : Controller
     {
         //
@@ -33,6 +32,7 @@ namespace OdeToFood.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
+        //todo: [RequireHttps]
         public ActionResult Login(LoginModel model, string returnUrl)
         {
             if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
@@ -263,7 +263,7 @@ namespace OdeToFood.Controllers
             if (ModelState.IsValid)
             {
                 // Neuen Benutzer in die Datenbank einfügen
-                using (UsersContext db = new UsersContext())
+                using (OdeToFoodDb db = new OdeToFoodDb())
                 {
                     UserProfile user = db.UserProfiles.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());
                     // Überprüfen, ob der Benutzer bereits vorhanden ist

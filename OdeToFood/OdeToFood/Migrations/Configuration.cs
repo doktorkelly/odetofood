@@ -1,11 +1,13 @@
 namespace OdeToFood.Migrations
 {
     using OdeToFood.Models;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Migrations;
-using System.Linq;
+    using System;
+    using System.Collections.Generic;
+    using System.Data.Entity;
+    using System.Data.Entity.Migrations;
+    using System.Linq;
+    using System.Web.Security;
+    using WebMatrix.WebData;
 
     internal sealed class Configuration : DbMigrationsConfiguration<OdeToFood.Models.OdeToFoodDb>
     {
@@ -33,10 +35,28 @@ using System.Linq;
                 context.Restaurants.AddOrUpdate(r => r.Name,
                     new Restaurant { Name = i.ToString(), City = "nowhere", Country = "usa" });
             }
+            SeedMemberShip();
+        }
 
-            //not working:
-            //context.Reviews.AddOrUpdate(v => v.Id,
-            //    new RestaurantReview { Id = 1, Rating = 8, Body = "great food", ReviewerName = "David" });
+        private void SeedMemberShip()
+        {
+            WebSecurity.InitializeDatabaseConnection("DefaultConnection",
+                "UserProfile", "UserId", "UserName", autoCreateTables: true);
+            var roles = (SimpleRoleProvider)Roles.Provider;
+            var membership = (SimpleMembershipProvider)Membership.Provider;
+
+            if (!roles.RoleExists("Admin"))
+            {
+                roles.CreateRole("Admin");
+            }
+            if (membership.GetUser("user01", false) == null)
+            {
+                membership.CreateUserAndAccount("user01", "user01");
+            }
+            if (!roles.GetRolesForUser("user01").Contains("Admin"))
+            {
+                roles.AddUsersToRoles(new[] {"user01"}, new[] {"admin"});
+            }
         }
     }
 }
