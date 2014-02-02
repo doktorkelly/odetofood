@@ -125,6 +125,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\RestaurantControllerTests.cs" />
+    <Compile Include="Features\FakeControllerContext.cs" />
+    <Compile Include="Features\FakeOdeToFoodDb.cs" />
+    <Compile Include="Features\RatingResult.cs" />
+    <Compile Include="Features\RestaurantRater.cs" />
+    <Compile Include="Features\TestData.cs" />
+    <Compile Include="Features\UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
   </ItemGroup>

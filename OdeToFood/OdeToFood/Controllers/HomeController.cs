@@ -11,11 +11,21 @@ namespace OdeToFood.Controllers
 {
     public class HomeController : Controller
     {
-        OdeToFoodDb _db = new OdeToFoodDb();
+        IOdeToFoodDb _db;
+
+        public HomeController()
+        {
+            _db = new OdeToFoodDb();
+        }
+
+        public HomeController(IOdeToFoodDb db)
+        {
+            _db = db;
+        }
 
         public ActionResult Autocomplete(string term)
         {
-            var model = _db.Restaurants
+            var model = _db.Query<Restaurant>()
                 .Where(x => x.Name.StartsWith(term))
                 .Take(10)
                 .Select(x => new {
@@ -24,12 +34,12 @@ namespace OdeToFood.Controllers
             return Json(model, JsonRequestBehavior.AllowGet);
         }
 
-        //[OutputCache(Duration=60, VaryByHeader="X-Requested-With;Accept-Language", Location=OutputCacheLocation.Server)]
-        [OutputCache(CacheProfile="Short")]
+        //[OutputCache(CacheProfile="Short")]
+        [OutputCache(Duration = 60, VaryByHeader = "X-Requested-With;Accept-Language", Location = OutputCacheLocation.Server)]
         public ActionResult Index(string searchTerm = null, int page = 1)
         {
             int pageSize = 10;
-            var model = _db.Restaurants
+            var model = _db.Query<Restaurant>()
                 .OrderByDescending(r => r.Reviews.Average(x => x.Rating))
                 .Where(r => searchTerm == null || r.Name.StartsWith(searchTerm))
                 .Select(r => new RestaurantListViewModel
