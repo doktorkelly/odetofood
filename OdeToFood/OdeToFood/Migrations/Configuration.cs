@@ -13,7 +13,7 @@ namespace OdeToFood.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationsEnabled = false;
         }
 
         protected override void Seed(OdeToFood.Models.OdeToFoodDb context)
@@ -29,19 +29,20 @@ namespace OdeToFood.Migrations
                         new RestaurantReview { Rating = 9, Body = "great food", ReviewerName = "David" }
                     }
                 });
-
-            for (int i = 0; i < 200; i++)
-            {
-                context.Restaurants.AddOrUpdate(r => r.Name,
-                    new Restaurant { Name = i.ToString(), City = "nowhere", Country = "usa" });
-            }
+            //for (int i = 0; i < 200; i++)
+            //{
+            //    context.Restaurants.AddOrUpdate(r => r.Name,
+            //        new Restaurant { Name = i.ToString(), City = "nowhere", Country = "usa" });
+            //}
             SeedMemberShip();
         }
 
         private void SeedMemberShip()
         {
-            WebSecurity.InitializeDatabaseConnection("DefaultConnection",
-                "UserProfile", "UserId", "UserName", autoCreateTables: true);
+            if (!WebSecurity.Initialized) {
+                WebSecurity.InitializeDatabaseConnection("DefaultConnection",
+                    "UserProfile", "UserId", "UserName", autoCreateTables: true);
+            }
             var roles = (SimpleRoleProvider)Roles.Provider;
             var membership = (SimpleMembershipProvider)Membership.Provider;
 

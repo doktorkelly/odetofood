@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using PagedList;
 using System.Web.UI;
+using System.Configuration;
 
 namespace OdeToFood.Controllers
 {
@@ -61,6 +62,7 @@ namespace OdeToFood.Controllers
         public ActionResult About()
         {
             ViewBag.Message = "Your app description page.";
+            ViewBag.Mailserver = ConfigurationManager.AppSettings["Mailserver"];
             AboutModel model = new AboutModel();
             model.Name = "David";
             model.Location = "Maryland USA";
